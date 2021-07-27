@@ -15,7 +15,7 @@ const connect = () => {
     const db = mongoose.connection
 
     db.once('open', () => {
-        console.log(`mongoDB connection at ${db.host}:${db.port}`)
+        console.log(`⛓mongoDB connection at ${db.host}:${db.port}`)
     })
     db.on('error', (err) => {
         console.log('uh oh spaghetti-OH 🍝')
@@ -25,5 +25,6 @@ const connect = () => {
 // export the connection function and models
 module.exports = {
     connect,
-    User: mongoose.model('user', require('./User.js'))
+    User: mongoose.model('user', require('./User.js')),
+    Task: mongoose.model('task', require('./Task.js'))
 } 

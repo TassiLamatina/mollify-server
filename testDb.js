@@ -11,19 +11,20 @@ const dbTest = async () => {
             password: 'oliver'
         })
 
-        const newTask = {
+        const newTask = new db.Task({
             title: 'test title',
             description: 'test description',
             notes: 'test notes',
             dateAdded: null,
             priority: 'high',
-            status: 'incomplete',
-        }
+            status: 'incomplete'
+        })
 
-        newUser.tasks.push(newTask)
+        console.log(` ${newTask} 🎉`)
+        // newUser.tasks.push(newTask)
 
         await newUser.save()
-        console.log('new user:', newUser)
+        console.log('new user:', newUser, newTask)
 
         // READ -- st login
         const foundUser = await db.User.findOne({

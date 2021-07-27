@@ -59,11 +59,17 @@ const seedDb = async () => {
 
         const testUsers = [
             {
+                name: 'Steve Lamatina',
+                email: 'steve@lamatina.com',
+                password: password,
+                tasks: testTasks
+            },
+            {
                 name: 'Tassiana Lamatina',
                 email: 'tassiana@lamatina.com',
                 password: password,
                 tasks: testTasks
-            },
+            }
         ]
 
        await db.User.insertMany(testUsers)
