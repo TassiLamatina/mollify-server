@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
+const TaskSchema = require('./Task.js')
 
 const UserSchema = new mongoose.Schema({
     name: String,
     password: String,
     email: String,
-    tasks: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Task"
-    }]
+    tasks: [
+        TaskSchema
+    ]
 },{
     timestamps: true
 })

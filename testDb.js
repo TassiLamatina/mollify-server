@@ -21,16 +21,10 @@ const dbTest = async () => {
         })
 
         console.log(` ${newTask} 🎉`)
-        // newUser.tasks.push(newTask)
+        newUser.tasks.push(newTask)
 
         await newUser.save()
-        console.log('new user:', newUser, newTask)
-
-        // READ -- st login
-        const foundUser = await db.User.findOne({
-            name: "test task user 1"
-        })
-        console.log('found user:', foundUser)
+       
 
     } catch (err) {
         console.log(err)

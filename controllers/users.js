@@ -1,11 +1,12 @@
 const router = require('express').Router()
-const db = require('../../models')
+const db = require('../models')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const authLockedRoute = require('./authLockedRoute.js')
+const authLockedRoute = require('./api-v1/authLockedRoute.js')
 
 // GET /users -- test api endpoint
 router.get('/', (req, res) => {
+    console.log("hello user route 👌🏼👌🏼👌🏼")
     res.json({ msg: 'hi! the user endpoint is okay 👌🏼'})
 })
 
@@ -84,6 +85,15 @@ router.post('/login', async (req, res) => {
         console.log(err)
         res.status(500).json({ msg: 'internal server error '})
     }
+})
+
+// route for 
+router.get('/tasks', authLockedRoute, (req, res) =>{
+    db.User.find({ email: res.locals.user.email }).then(user => {
+        console.log(user)
+        res.json(user)
+    })
+    
 })
 
 // GET /auth-locked -- will redirect if bad or no jwt is found

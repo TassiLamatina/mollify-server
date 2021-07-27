@@ -71,6 +71,7 @@ const seedDb = async () => {
                 tasks: testTasks
             }
         ]
+        await db.Task.insertMany(testTasks)
 
        await db.User.insertMany(testUsers)
 

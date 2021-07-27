@@ -23,8 +23,8 @@ app.use((req, res, next) => {
     next()
 })
 // controllers 
-app.use('/api-v1/users', require('./controllers/api-v1/users.js'))
-app.use('/api-v1/tasks', require('./controllers/api-v1/tasks.js'))
+app.use('/users', require('./controllers/users.js'))
+app.use('/tasks', require('./controllers/tasks.js'))
 
 const middleware = (req, res, next) =>{
     console.log('I am a route specific middleware!')

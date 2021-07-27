@@ -1,11 +1,15 @@
 const router = require('express').Router()
-const db = require('../../models')
-const authLockedRoute = require('./authLockedRoute')
+const db = require('../models')
+const authLockedRoute = require('./api-v1/authLockedRoute')
 
 
 // GET - /tasks - get all tasks for the user associated with the token
 router.get('/', authLockedRoute, (req,res) => {
-    res.json({ tasks: res.locals.user.tasks})
+    console.log({tasks: res.locals.user.tasks})
+    db.Task.find().then(tasks => {
+        res.json({ tasks: tasks})
+    })
+    
 })
 
 //POST - /tasks - new task in body, jwt token in auth headers
