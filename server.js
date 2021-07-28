@@ -18,26 +18,25 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json()) // for the request body
 // custom middleware
 app.use((req, res, next) => {
-    console.log(`incoming request on : ${req.method} ${req.url}`)
+    // console.log(`incoming request on : ${req.method} ${req.url}`)
     res.locals.anything = '🤞🏻'
     next()
 })
 // controllers 
-app.use('/users', require('./controllers/users.js'))
-app.use('/tasks', require('./controllers/tasks.js'))
+app.use('/api-v1/users', require('./controllers/api-v1/users.js'))
 
 const middleware = (req, res, next) =>{
-    console.log('I am a route specific middleware!')
+    // console.log('I am a route specific middleware!')
     next()
 }
 
 app.get('/', middleware, (req, res) => {
-    console.log(res.locals)
+    // console.log(res.locals)
     res.json({ msg: 'hello from backend! 👋'})
 })
 
 //listen on a port
 app.listen(PORT, () => {
     rowdyResults.print()
-    console.log(`listening on port ${PORT} 🥂`)
+    // console.log(`listening on port ${PORT} 🥂`)
 }) 

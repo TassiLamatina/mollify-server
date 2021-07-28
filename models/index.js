@@ -18,7 +18,7 @@ const connect = () => {
         console.log(`⛓mongoDB connection at ${db.host}:${db.port}`)
     })
     db.on('error', (err) => {
-        console.log('uh oh spaghetti-OH 🍝')
+        // console.log('uh oh spaghetti-OH 🍝')
         console.log(err)
     })
 } 

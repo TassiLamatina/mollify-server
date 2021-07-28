@@ -20,7 +20,7 @@ const dbTest = async () => {
             status: 'incomplete'
         })
 
-        console.log(` ${newTask} 🎉`)
+        // console.log(` ${newTask} 🎉`)
         newUser.tasks.push(newTask)
 
         await newUser.save()

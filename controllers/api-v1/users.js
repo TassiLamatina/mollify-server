@@ -1,12 +1,12 @@
 const router = require('express').Router()
-const db = require('../models')
+const db = require('../../models')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const authLockedRoute = require('./api-v1/authLockedRoute.js')
+const authLockedRoute = require('./authLockedRoute.js')
 
 // GET /users -- test api endpoint
 router.get('/', (req, res) => {
-    console.log("hello user route 👌🏼👌🏼👌🏼")
+    // console.log("hello user route 👌🏼👌🏼👌🏼")
     res.json({ msg: 'hi! the user endpoint is okay 👌🏼'})
 })
 
@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
 
         // if the user is found -- dont let them register
         if(findUser) return res.status(400).json({ msg: 'user already exists in the db '})
-        console.log(findUser)
+        // console.log(findUser)
         // hash password from req.body
         const password = req.body.password
         const salt = 12
@@ -90,16 +90,54 @@ router.post('/login', async (req, res) => {
 // route for 
 router.get('/tasks', authLockedRoute, (req, res) =>{
     db.User.find({ email: res.locals.user.email }).then(user => {
-        console.log(user)
+        // console.log(user)
         res.json(user)
     })
     
 })
 
+//POST - /tasks - new task in body, jwt token in auth headers
+router.post('/tasks', authLockedRoute, async (req,res) => {
+    try {
+        res.locals.user.tasks.push(req.body.task)
+        // console.log(res.locals.user.tasks)
+        await res.locals.user.save()
+        res.json({ task: res.locals.user.tasks[res.locals.user.tasks.length-1] })
+    } catch(err) {
+        console.log(err)
+        res.status(500).json({ msg: 'internal server error '})
+    }
+})
+
+// PUT - /tasks - update task. task in body, token in headers
+router.put('/tasks', authLockedRoute, async (req,res) => {
+    try {
+        let i = res.locals.user.tasks.findIndex(task => task._id == req.body.task._id)
+        res.locals.user.tasks[i] = req.body.task
+        await res.locals.user.save()
+        res.json({msg: `task ${req.body.task._id} successfully updated`})
+    } catch(err){
+        console.log(err)
+        res.status(500).json({ msg: 'internal server error' })
+    }
+})
+
+//DELETE - /tasks - delete a task. taskId in body, token in headers
+router.delete('/tasks', authLockedRoute, async (req,res) => {
+    try {
+        res.locals.user.tasks.id(req.body.taskId).remove()
+        res.locals.user.save()
+        res.json({msg: `task ${req.body.taskId} successfully deleted`})
+    } catch(err) {
+        console.log(err)
+        res.status(500).json({ msg: 'internal server error'})
+    }
+})
+
 // GET /auth-locked -- will redirect if bad or no jwt is found
 router.get('/auth-locked', authLockedRoute, (req, res) => {
     // do whatever we like with the user
-    console.log(res.locals.user)
+    // console.log(res.locals.user)
     // send private data back
     res.json({ msg: 'welcome to the auth locked route you lucky dog 🐶' })
 })

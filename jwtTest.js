@@ -12,13 +12,13 @@ const jwtTest = () => {
 
         // signing the jwt
         const token = jwt.sign(payload, 'This is my secret', { expiresIn: 60 * 60 })
-        console.log(token)
+        // console.log(token)
 
         // requests to server:
 
         // decode the incoming jwt
         const decoded = jwt.verify(token, 'This is my secret')
-        console.log(decoded)
+        // console.log(decoded)
 
     } catch (err) {
         console.log(err)

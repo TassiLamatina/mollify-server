@@ -5,7 +5,7 @@ db.connect()
 const clearDb = async () => {
     try {
         await db.User.deleteMany({})
-        console.log('all users deleted')
+        // console.log('all users deleted')
         process.exit()
     } catch(err) {
         console.log(err)

@@ -76,7 +76,7 @@ const seedDb = async () => {
        await db.User.insertMany(testUsers)
 
         let count = await db.User.countDocuments({})
-        console.log(`db seeded with ${count} users`)
+        // console.log(`db seeded with ${count} users`)
         process.exit()
     } catch(err) {
         console.log(err)
